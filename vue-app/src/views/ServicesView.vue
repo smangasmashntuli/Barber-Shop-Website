@@ -1,20 +1,24 @@
 <script setup>
-import { computed, ref } from 'vue'
-import { RouterLink } from 'vue-router'
-import { getServicesByCategory, serviceCategories, services } from '../data/services.js'
-import { shop } from '../data/site.js'
-import ServiceCard from '../components/ui/ServiceCard.vue'
-import AppIcon from '../components/ui/AppIcon.vue'
+import { computed, ref } from "vue";
+import { RouterLink } from "vue-router";
+import {
+  getServicesByCategory,
+  serviceCategories,
+  services,
+} from "../data/services.js";
+import { shop } from "../data/site.js";
+import ServiceCard from "../components/ui/ServiceCard.vue";
+import AppIcon from "../components/ui/AppIcon.vue";
 
-const activeCategory = ref('all')
+const activeCategory = ref("all");
 
 const filters = computed(() => [
-  { id: 'all', name: `All services (${services.length})` },
+  { id: "all", name: `All services (${services.length})` },
   ...serviceCategories.map((category) => ({
     id: category.id,
     name: `${category.name} (${getServicesByCategory(category.id).length})`,
   })),
-])
+]);
 
 const groups = computed(() =>
   serviceCategories
@@ -23,10 +27,15 @@ const groups = computed(() =>
       services: getServicesByCategory(category.id),
     }))
     .filter((group) => group.services.length > 0)
-    .filter((group) => activeCategory.value === 'all' || group.id === activeCategory.value),
-)
+    .filter(
+      (group) =>
+        activeCategory.value === "all" || group.id === activeCategory.value,
+    ),
+);
 
-const priceFrom = computed(() => Math.min(...services.map((service) => service.price)))
+const priceFrom = computed(() =>
+  Math.min(...services.map((service) => service.price)),
+);
 </script>
 
 <template>
@@ -36,12 +45,17 @@ const priceFrom = computed(() => Math.min(...services.map((service) => service.p
         <p class="eyebrow">Services &amp; prices</p>
         <h1>Every price on the board, before you sit down</h1>
         <p class="lead">
-          Thirteen services across haircuts, beard work, grooming extras and packages. Prices include VAT,
-          services start at {{ shop.currencySymbol }}{{ priceFrom }}, and every booking shows the chair
-          time you are reserving — so you know exactly what you are paying for.
+          Thirteen services across haircuts, beard work, grooming extras and
+          packages. Prices include VAT, services start at
+          {{ shop.currencySymbol }}{{ priceFrom }}, and every booking shows the
+          chair time you are reserving — so you know exactly what you are paying
+          for.
         </p>
         <div class="btn-row">
-          <RouterLink class="btn btn--primary" :to="{ name: 'contact', hash: '#book' }">
+          <RouterLink
+            class="btn btn--primary"
+            :to="{ name: 'contact', hash: '#book' }"
+          >
             <AppIcon name="calendar" :size="17" />
             Book an appointment
           </RouterLink>
@@ -64,7 +78,11 @@ const priceFrom = computed(() => Math.min(...services.map((service) => service.p
 
     <section class="section section--tight">
       <div class="shell">
-        <div class="filters" role="group" aria-label="Filter services by category">
+        <div
+          class="filters"
+          role="group"
+          aria-label="Filter services by category"
+        >
           <button
             v-for="filter in filters"
             :key="filter.id"
@@ -80,7 +98,12 @@ const priceFrom = computed(() => Math.min(...services.map((service) => service.p
       </div>
     </section>
 
-    <section v-for="group in groups" :id="group.id" :key="group.id" class="section section--tight">
+    <section
+      v-for="group in groups"
+      :id="group.id"
+      :key="group.id"
+      class="section section--tight"
+    >
       <div class="shell">
         <div class="section-head">
           <p class="eyebrow">{{ group.services.length }} services</p>
@@ -110,30 +133,32 @@ const priceFrom = computed(() => Math.min(...services.map((service) => service.p
               <AppIcon name="chair" :size="18" />
               <span>
                 <strong>Walk-ins welcome</strong>
-                No booking? Come through — if a chair is free, we will take you. Booking simply keeps a
-                slot yours.
+                No booking? Come through — if a chair is free, we will take you.
+                Booking simply keeps a slot yours.
               </span>
             </li>
             <li>
               <AppIcon name="clock" :size="18" />
               <span>
                 <strong>Last booking 45 minutes before closing</strong>
-                A service is never started so late that we would have to rush the finish.
+                A service is never started so late that we would have to rush
+                the finish.
               </span>
             </li>
             <li>
               <AppIcon name="razor" :size="18" />
               <span>
                 <strong>Long braiding sessions</strong>
-                Braids, twists and the SMASH Combo need 75 to 90 minutes — book those in the morning or
-                on a Wednesday late night.
+                Braids, twists and the SMASH Combo need 75 to 90 minutes — book
+                those in the morning or on a Wednesday late night.
               </span>
             </li>
             <li>
               <AppIcon name="tag" :size="18" />
               <span>
                 <strong>Combos save you money</strong>
-                The SMASH Combo works out R60 cheaper than booking the cut, beard and wash separately.
+                The SMASH Combo works out R60 cheaper than booking the cut,
+                beard and wash separately.
               </span>
             </li>
           </ul>
@@ -142,14 +167,20 @@ const priceFrom = computed(() => Math.min(...services.map((service) => service.p
         <div class="card card--plain notes-card">
           <h3>Not sure what to book?</h3>
           <p class="muted">
-            Choose the service closest to what you want and add a note in the booking form. Your barber will
-            confirm the shape and the time with you before the clippers come out, and any price difference
-            is agreed in the chair — never added afterwards.
+            Choose the service closest to what you want and add a note in the
+            booking form. Your barber will confirm the shape and the time with
+            you before the clippers come out, and any price difference is agreed
+            in the chair — never added afterwards.
           </p>
-          <RouterLink class="btn btn--primary btn--block" :to="{ name: 'contact', hash: '#book' }">
+          <RouterLink
+            class="btn btn--primary btn--block"
+            :to="{ name: 'contact', hash: '#book' }"
+          >
             Start a booking
           </RouterLink>
-          <RouterLink class="btn btn--quiet" :to="{ name: 'about' }">Meet the barbers first</RouterLink>
+          <RouterLink class="btn btn--quiet" :to="{ name: 'about' }"
+            >Meet the barbers first</RouterLink
+          >
         </div>
       </div>
     </section>
@@ -173,7 +204,10 @@ const priceFrom = computed(() => Math.min(...services.map((service) => service.p
   letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: border-color var(--transition), color var(--transition), background-color var(--transition);
+  transition:
+    border-color var(--transition),
+    color var(--transition),
+    background-color var(--transition);
 }
 
 .filter:hover {
@@ -232,5 +266,21 @@ const priceFrom = computed(() => Math.min(...services.map((service) => service.p
   display: grid;
   gap: 0.85rem;
   justify-items: start;
+}
+
+@media (max-width: 700px) {
+  .grid--3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .filters {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+
+  .filter {
+    width: 100%;
+  }
 }
 </style>

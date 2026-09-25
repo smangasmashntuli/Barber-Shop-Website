@@ -1,59 +1,78 @@
 <script setup>
-import { computed } from 'vue'
-import { getServicesByCategory, serviceCategories } from '../../data/services.js'
-import { bookingBarberOptions } from '../../data/barbers.js'
-import { shop } from '../../data/site.js'
-import { useBooking } from '../../composables/useBooking.js'
+import { computed } from "vue";
+import {
+  getServicesByCategory,
+  serviceCategories,
+} from "../../data/services.js";
+import { bookingBarberOptions } from "../../data/barbers.js";
+import { shop } from "../../data/site.js";
+import { useBooking } from "../../composables/useBooking.js";
 import {
   formatLongDate,
   formatTimeLabel,
   weekdayNameForIsoDate,
-} from '../../utils/datetime.js'
-import { formatHoursLabel, hoursForIsoDate, latestBookableDate, shopToday } from '../../utils/openingHours.js'
-import AppIcon from '../ui/AppIcon.vue'
+} from "../../utils/datetime.js";
+import {
+  formatHoursLabel,
+  hoursForIsoDate,
+  latestBookableDate,
+  shopToday,
+} from "../../utils/openingHours.js";
+import AppIcon from "../ui/AppIcon.vue";
 
-const emit = defineEmits(['submitted'])
+const emit = defineEmits(["submitted"]);
 
-const booking = useBooking()
-const form = booking.form
-const errors = booking.errors
-const selectedService = booking.selectedService
-const selectedBarber = booking.selectedBarber
-const availableSlots = booking.availableSlots
-const tradingSlots = booking.tradingSlots
-const previewEndLabel = booking.previewEndLabel
+const booking = useBooking();
+const form = booking.form;
+const errors = booking.errors;
+const selectedService = booking.selectedService;
+const selectedBarber = booking.selectedBarber;
+const availableSlots = booking.availableSlots;
+const tradingSlots = booking.tradingSlots;
+const previewEndLabel = booking.previewEndLabel;
 
-const minDate = shopToday()
-const maxDate = latestBookableDate()
+const minDate = shopToday();
+const maxDate = latestBookableDate();
 
 const serviceGroups = serviceCategories.map((category) => ({
   ...category,
   services: getServicesByCategory(category.id),
-}))
+}));
 
-const bookedHours = computed(() => (form.date ? hoursForIsoDate(form.date) : null))
-const closedOnChosenDay = computed(() => Boolean(form.date) && !bookedHours.value)
+const bookedHours = computed(() =>
+  form.date ? hoursForIsoDate(form.date) : null,
+);
+const closedOnChosenDay = computed(
+  () => Boolean(form.date) && !bookedHours.value,
+);
 const hasNoOpenSlots = computed(
-  () => Boolean(form.date) && !closedOnChosenDay.value && availableSlots.value.length === 0,
-)
-const needsEarlierDay = computed(() => hasNoOpenSlots.value && tradingSlots.value.length > 0)
+  () =>
+    Boolean(form.date) &&
+    !closedOnChosenDay.value &&
+    availableSlots.value.length === 0,
+);
+const needsEarlierDay = computed(
+  () => hasNoOpenSlots.value && tradingSlots.value.length > 0,
+);
 
-const errorCount = computed(() => Object.keys(errors).length)
+const errorCount = computed(() => Object.keys(errors).length);
 
 function onFieldInput(field, value) {
-  booking.setField(field, value)
+  booking.setField(field, value);
 }
 
 function onSubmit() {
-  const result = booking.submitBooking()
+  const result = booking.submitBooking();
   if (result.ok) {
-    emit('submitted', result.booking)
-    return
+    emit("submitted", result.booking);
+    return;
   }
   // Send the client straight to the first problem instead of leaving them to hunt.
-  const firstInvalidField = Object.keys(booking.errors)[0]
-  const target = firstInvalidField ? document.getElementById(`booking-${firstInvalidField}`) : null
-  if (typeof target?.focus === 'function') target.focus()
+  const firstInvalidField = Object.keys(booking.errors)[0];
+  const target = firstInvalidField
+    ? document.getElementById(`booking-${firstInvalidField}`)
+    : null;
+  if (typeof target?.focus === "function") target.focus();
 }
 </script>
 
@@ -67,8 +86,9 @@ function onSubmit() {
     >
       <AppIcon name="close" :size="16" />
       <span>
-        {{ errorCount }} {{ errorCount === 1 ? 'field needs' : 'fields need' }} your attention before we
-        can confirm this booking.
+        {{ errorCount }}
+        {{ errorCount === 1 ? "field needs" : "fields need" }} your attention
+        before we can confirm this booking.
       </span>
     </div>
 
@@ -87,11 +107,17 @@ function onSubmit() {
                 placeholder="Thandi"
                 :value="form.firstName"
                 :aria-invalid="errors.firstName ? 'true' : 'false'"
-                :aria-describedby="errors.firstName ? 'booking-firstName-error' : undefined"
+                :aria-describedby="
+                  errors.firstName ? 'booking-firstName-error' : undefined
+                "
                 @input="onFieldInput('firstName', $event.target.value)"
                 @blur="booking.validateField('firstName')"
               />
-              <p v-if="errors.firstName" id="booking-firstName-error" class="field__error">
+              <p
+                v-if="errors.firstName"
+                id="booking-firstName-error"
+                class="field__error"
+              >
                 {{ errors.firstName }}
               </p>
             </div>
@@ -106,11 +132,17 @@ function onSubmit() {
                 placeholder="Mahlangu"
                 :value="form.lastName"
                 :aria-invalid="errors.lastName ? 'true' : 'false'"
-                :aria-describedby="errors.lastName ? 'booking-lastName-error' : undefined"
+                :aria-describedby="
+                  errors.lastName ? 'booking-lastName-error' : undefined
+                "
                 @input="onFieldInput('lastName', $event.target.value)"
                 @blur="booking.validateField('lastName')"
               />
-              <p v-if="errors.lastName" id="booking-lastName-error" class="field__error">
+              <p
+                v-if="errors.lastName"
+                id="booking-lastName-error"
+                class="field__error"
+              >
                 {{ errors.lastName }}
               </p>
             </div>
@@ -125,12 +157,22 @@ function onSubmit() {
                 placeholder="you@example.co.za"
                 :value="form.email"
                 :aria-invalid="errors.email ? 'true' : 'false'"
-                :aria-describedby="errors.email ? 'booking-email-error' : undefined"
+                :aria-describedby="
+                  errors.email ? 'booking-email-error' : undefined
+                "
                 @input="onFieldInput('email', $event.target.value)"
                 @blur="booking.validateField('email')"
               />
-              <p v-if="errors.email" id="booking-email-error" class="field__error">{{ errors.email }}</p>
-              <p v-else class="field__hint">We send your confirmation and reminders here.</p>
+              <p
+                v-if="errors.email"
+                id="booking-email-error"
+                class="field__error"
+              >
+                {{ errors.email }}
+              </p>
+              <p v-else class="field__hint">
+                We send your confirmation and reminders here.
+              </p>
             </div>
 
             <div class="field" :class="{ 'field--invalid': errors.phone }">
@@ -143,11 +185,19 @@ function onSubmit() {
                 placeholder="082 123 4567"
                 :value="form.phone"
                 :aria-invalid="errors.phone ? 'true' : 'false'"
-                :aria-describedby="errors.phone ? 'booking-phone-error' : undefined"
+                :aria-describedby="
+                  errors.phone ? 'booking-phone-error' : undefined
+                "
                 @input="onFieldInput('phone', $event.target.value)"
                 @blur="booking.validateField('phone')"
               />
-              <p v-if="errors.phone" id="booking-phone-error" class="field__error">{{ errors.phone }}</p>
+              <p
+                v-if="errors.phone"
+                id="booking-phone-error"
+                class="field__error"
+              >
+                {{ errors.phone }}
+              </p>
             </div>
           </div>
         </fieldset>
@@ -155,28 +205,48 @@ function onSubmit() {
         <fieldset class="booking__group">
           <legend>2. Service &amp; barber</legend>
           <div class="booking__grid">
-            <div class="field" :class="{ 'field--invalid': errors.serviceSlug }">
+            <div
+              class="field"
+              :class="{ 'field--invalid': errors.serviceSlug }"
+            >
               <label for="booking-serviceSlug">Service</label>
               <select
                 id="booking-serviceSlug"
                 name="serviceSlug"
                 :value="form.serviceSlug"
                 :aria-invalid="errors.serviceSlug ? 'true' : 'false'"
-                :aria-describedby="errors.serviceSlug ? 'booking-serviceSlug-error' : undefined"
+                :aria-describedby="
+                  errors.serviceSlug ? 'booking-serviceSlug-error' : undefined
+                "
                 @change="booking.setService($event.target.value)"
                 @blur="booking.validateField('serviceSlug')"
               >
                 <option value="" disabled>Choose a service</option>
-                <optgroup v-for="group in serviceGroups" :key="group.id" :label="group.name">
-                  <option v-for="service in group.services" :key="service.slug" :value="service.slug">
-                    {{ service.name }} — R{{ service.price }} · {{ service.duration }} min
+                <optgroup
+                  v-for="group in serviceGroups"
+                  :key="group.id"
+                  :label="group.name"
+                >
+                  <option
+                    v-for="service in group.services"
+                    :key="service.slug"
+                    :value="service.slug"
+                  >
+                    {{ service.name }} — R{{ service.price }} ·
+                    {{ service.duration }} min
                   </option>
                 </optgroup>
               </select>
-              <p v-if="errors.serviceSlug" id="booking-serviceSlug-error" class="field__error">
+              <p
+                v-if="errors.serviceSlug"
+                id="booking-serviceSlug-error"
+                class="field__error"
+              >
                 {{ errors.serviceSlug }}
               </p>
-              <p v-else class="field__hint">Prices include VAT. Duration is the chair time you are booking.</p>
+              <p v-else class="field__hint">
+                Prices include VAT. Duration is the chair time you are booking.
+              </p>
             </div>
 
             <div class="field" :class="{ 'field--invalid': errors.barberSlug }">
@@ -186,15 +256,29 @@ function onSubmit() {
                 name="barberSlug"
                 :value="form.barberSlug"
                 :aria-invalid="errors.barberSlug ? 'true' : 'false'"
-                :aria-describedby="errors.barberSlug ? 'booking-barberSlug-error' : undefined"
+                :aria-describedby="
+                  errors.barberSlug ? 'booking-barberSlug-error' : undefined
+                "
                 @change="booking.setBarber($event.target.value)"
                 @blur="booking.validateField('barberSlug')"
               >
-                <option v-for="barber in bookingBarberOptions" :key="barber.slug" :value="barber.slug">
-                  {{ barber.slug === 'any' ? `${barber.name} (next free chair)` : `${barber.name} — ${barber.role}` }}
+                <option
+                  v-for="barber in bookingBarberOptions"
+                  :key="barber.slug"
+                  :value="barber.slug"
+                >
+                  {{
+                    barber.slug === "any"
+                      ? `${barber.name} (next free chair)`
+                      : `${barber.name} — ${barber.role}`
+                  }}
                 </option>
               </select>
-              <p v-if="errors.barberSlug" id="booking-barberSlug-error" class="field__error">
+              <p
+                v-if="errors.barberSlug"
+                id="booking-barberSlug-error"
+                class="field__error"
+              >
                 {{ errors.barberSlug }}
               </p>
             </div>
@@ -214,11 +298,19 @@ function onSubmit() {
                 :max="maxDate"
                 :value="form.date"
                 :aria-invalid="errors.date ? 'true' : 'false'"
-                :aria-describedby="errors.date ? 'booking-date-error' : undefined"
+                :aria-describedby="
+                  errors.date ? 'booking-date-error' : undefined
+                "
                 @change="booking.setDate($event.target.value)"
                 @blur="booking.validateField('date')"
               />
-              <p v-if="errors.date" id="booking-date-error" class="field__error">{{ errors.date }}</p>
+              <p
+                v-if="errors.date"
+                id="booking-date-error"
+                class="field__error"
+              >
+                {{ errors.date }}
+              </p>
               <p v-else-if="bookedHours" class="field__hint">
                 {{ weekdayNameForIsoDate(form.date) }} trading hours:
                 {{ formatHoursLabel(bookedHours) }}
@@ -229,20 +321,24 @@ function onSubmit() {
               <label for="booking-time">Appointment time</label>
 
               <p v-if="!selectedService" class="field__hint">
-                Choose a service first so we can show times that fit before closing.
+                Choose a service first so we can show times that fit before
+                closing.
               </p>
               <p v-else-if="!form.date" class="field__hint">
-                Pick a date and we will list every open slot that fits this service before closing.
+                Pick a date and we will list every open slot that fits this
+                service before closing.
               </p>
               <p v-else-if="closedOnChosenDay" class="field__hint">
                 The shop does not trade on that day. Try another date.
               </p>
               <p v-else-if="needsEarlierDay" class="field__hint">
-                Today's remaining slots have already started. Choose tomorrow or later, or call the shop on
+                Today's remaining slots have already started. Choose tomorrow or
+                later, or call the shop on
                 {{ shop.phone.label }} for a walk-in.
               </p>
               <p v-else-if="hasNoOpenSlots" class="field__hint">
-                No slot on that date fits a {{ selectedService.duration }} minute service before closing.
+                No slot on that date fits a
+                {{ selectedService.duration }} minute service before closing.
                 Try another date.
               </p>
 
@@ -268,12 +364,20 @@ function onSubmit() {
                 </button>
               </div>
 
-              <p v-if="errors.time" id="booking-time-error" class="field__error">{{ errors.time }}</p>
+              <p
+                v-if="errors.time"
+                id="booking-time-error"
+                class="field__error"
+              >
+                {{ errors.time }}
+              </p>
             </div>
           </div>
 
           <div class="field">
-            <label for="booking-notes">Anything your barber should know? (optional)</label>
+            <label for="booking-notes"
+              >Anything your barber should know? (optional)</label
+            >
             <textarea
               id="booking-notes"
               name="notes"
@@ -294,7 +398,10 @@ function onSubmit() {
             <dd>
               <template v-if="selectedService">
                 {{ selectedService.name }}
-                <span class="muted small">· R{{ selectedService.price }} · {{ selectedService.duration }} min</span>
+                <span class="muted small"
+                  >· R{{ selectedService.price }} ·
+                  {{ selectedService.duration }} min</span
+                >
               </template>
               <span v-else class="muted">Not selected yet</span>
             </dd>
@@ -302,14 +409,18 @@ function onSubmit() {
           <div>
             <dt>Barber</dt>
             <dd>
-              <template v-if="selectedBarber">{{ selectedBarber.name }}</template>
+              <template v-if="selectedBarber">{{
+                selectedBarber.name
+              }}</template>
               <span v-else class="muted">Not selected yet</span>
             </dd>
           </div>
           <div>
             <dt>Date</dt>
             <dd>
-              <template v-if="form.date">{{ formatLongDate(form.date) }}</template>
+              <template v-if="form.date">{{
+                formatLongDate(form.date)
+              }}</template>
               <span v-else class="muted">Not selected yet</span>
             </dd>
           </div>
@@ -318,17 +429,21 @@ function onSubmit() {
             <dd>
               <template v-if="form.time">
                 {{ formatTimeLabel(form.time) }}
-                <span v-if="previewEndLabel" class="muted small">– {{ previewEndLabel }}</span>
+                <span v-if="previewEndLabel" class="muted small"
+                  >– {{ previewEndLabel }}</span
+                >
               </template>
               <span v-else class="muted">Not selected yet</span>
             </dd>
           </div>
         </dl>
 
-        <button type="submit" class="btn btn--primary btn--block">Confirm booking</button>
+        <button type="submit" class="btn btn--primary btn--block">
+          Confirm booking
+        </button>
         <p class="small muted">
-          You will get a confirmation with a calendar file and a Google Calendar link. Nothing is charged
-          online; you pay in the shop.
+          You will get a confirmation with a calendar file and a Google Calendar
+          link. Nothing is charged online; you pay in the shop.
         </p>
       </aside>
     </div>
@@ -409,7 +524,9 @@ function onSubmit() {
   color: var(--cream);
   cursor: pointer;
   text-align: center;
-  transition: border-color var(--transition), background-color var(--transition),
+  transition:
+    border-color var(--transition),
+    background-color var(--transition),
     color var(--transition);
 }
 
@@ -482,6 +599,33 @@ function onSubmit() {
 
   .booking__summary {
     position: static;
+  }
+}
+
+@media (max-width: 560px) {
+  .booking__alert {
+    align-items: flex-start;
+  }
+
+  .booking__group {
+    padding: 0.9rem;
+  }
+
+  .booking__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.9rem;
+  }
+
+  .booking__group .field + .field {
+    margin-top: 0;
+  }
+
+  .slots {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .booking__summary .btn {
+    width: 100%;
   }
 }
 </style>
