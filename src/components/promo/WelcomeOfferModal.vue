@@ -1,57 +1,64 @@
 <script setup>
 /**
- * Purposeful first-visit offer: it appears once per browser session, a short
- * while after the visitor lands on the home page, and is dismissed by the close
- * button, the Escape key or a click outside. It never reappears in the same
- * session, and it never blocks browsing or booking after it closes.
+ * Purposeful new-client offer: the modal appears once per browser session for
+ * visitors who have not used the persistent first-haircut discount. Eligibility
+ * is handled by useWelcomeOffer; closing the modal does not consume the offer.
  */
-import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { RouterLink } from 'vue-router'
-import { shop } from '../../data/site.js'
-import { useBodyScrollLock } from '../../composables/useBodyScrollLock.js'
-import AppIcon from '../ui/AppIcon.vue'
+import { nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { RouterLink } from "vue-router";
+import { shop } from "../../data/site.js";
+import { useBodyScrollLock } from "../../composables/useBodyScrollLock.js";
+import {
+  initializeWelcomeOffer,
+  useWelcomeOffer,
+} from "../../composables/useWelcomeOffer.js";
+import AppIcon from "../ui/AppIcon.vue";
 
-const STORAGE_KEY = 'smash-welcome-offer-dismissed'
-const APPEAR_DELAY_MS = 9000
-const PROMO_CODE = 'SMASH50'
+const SESSION_SEEN_KEY = "smash-welcome-offer-seen";
+const APPEAR_DELAY_MS = 9000;
 
-const isOpen = ref(false)
-const closeButton = ref(null)
+const isOpen = ref(false);
+const closeButton = ref(null);
+const welcomeOffer = useWelcomeOffer();
 
-useBodyScrollLock(isOpen)
+useBodyScrollLock(isOpen);
 
-let appearTimer
+let appearTimer;
 
 onMounted(() => {
-  const alreadySeen = sessionStorage.getItem(STORAGE_KEY)
-  if (alreadySeen) return
+  initializeWelcomeOffer();
+  if (
+    !welcomeOffer.isEligible.value ||
+    sessionStorage.getItem(SESSION_SEEN_KEY)
+  )
+    return;
   appearTimer = window.setTimeout(() => {
-    isOpen.value = true
-    sessionStorage.setItem(STORAGE_KEY, 'true')
-  }, APPEAR_DELAY_MS)
-})
+    isOpen.value = true;
+    sessionStorage.setItem(SESSION_SEEN_KEY, "true");
+  }, APPEAR_DELAY_MS);
+});
 
 onBeforeUnmount(() => {
-  window.clearTimeout(appearTimer)
-  document.removeEventListener('keydown', onDocumentKeydown)
-})
+  window.clearTimeout(appearTimer);
+  document.removeEventListener("keydown", onDocumentKeydown);
+});
 
 function close() {
-  isOpen.value = false
+  isOpen.value = false;
 }
 
 function onDocumentKeydown(event) {
-  if (event.key === 'Escape' && isOpen.value) close()
+  if (event.key === "Escape" && isOpen.value) close();
 }
 
 watch(isOpen, (open) => {
   if (open) {
-    document.addEventListener('keydown', onDocumentKeydown)
-    nextTick(() => closeButton.value?.focus())
+    document.addEventListener("keydown", onDocumentKeydown);
+    nextTick(() => closeButton.value?.focus());
   } else {
-    document.removeEventListener('keydown', onDocumentKeydown)
+    document.removeEventListener("keydown", onDocumentKeydown);
   }
-})
+});
 </script>
 
 <template>
@@ -63,33 +70,49 @@ watch(isOpen, (open) => {
       aria-labelledby="promo-title"
       aria-describedby="promo-copy"
     >
-      <button ref="closeButton" type="button" class="promo__close" @click="close">
+      <button
+        ref="closeButton"
+        type="button"
+        class="promo__close"
+        @click="close"
+      >
         <AppIcon name="close" :size="20" />
         <span class="sr-only">Close the first-visit offer</span>
       </button>
 
-      <p class="eyebrow">First visit to SMASH</p>
-      <h2 id="promo-title">R50 off your first cut</h2>
+      <p class="eyebrow">New client offer</p>
+      <h2 id="promo-title">30% off your first haircut</h2>
       <p id="promo-copy" class="muted">
-        Book any haircut or the SMASH Combo online and mention the code below when you arrive. It is our
-        welcome to the chair: one use per client, valid Monday to Thursday before 5 PM.
+        Your discount is applied automatically when you book an eligible
+        haircut. It is available once per browser visitor and is shown on your
+        booking confirmation and calendar event.
       </p>
 
       <p class="promo__code">
-        <span>Your code</span>
-        <strong>{{ PROMO_CODE }}</strong>
+        <span>Applied automatically</span>
+        <strong>30% OFF</strong>
       </p>
 
       <div class="promo__actions">
-        <RouterLink class="btn btn--primary" :to="{ name: 'contact', hash: '#book' }" @click="close">
+        <RouterLink
+          class="btn btn--primary"
+          :to="{ name: 'contact', hash: '#book' }"
+          @click="close"
+        >
           Book now and use it
         </RouterLink>
-        <button type="button" class="btn btn--quiet" @click="close">No thanks, keep browsing</button>
+        <button type="button" class="btn btn--quiet" @click="close">
+          No thanks, keep browsing
+        </button>
       </div>
 
       <p class="small muted">
-        Questions? Call the shop on <a :href="shop.phone.href">{{ shop.phone.label }}</a>. Full booking
-        terms are on our <RouterLink :to="{ name: 'terms' }" @click="close">Terms &amp; Conditions</RouterLink>
+        Questions? Call the shop on
+        <a :href="shop.phone.href">{{ shop.phone.label }}</a
+        >. Full booking terms are on our
+        <RouterLink :to="{ name: 'terms' }" @click="close"
+          >Terms &amp; Conditions</RouterLink
+        >
         page.
       </p>
     </div>
@@ -116,7 +139,11 @@ watch(isOpen, (open) => {
   overflow-y: auto;
   padding: clamp(1.5rem, 4vw, 2.5rem);
   background:
-    radial-gradient(circle at 15% 0%, rgba(200, 162, 74, 0.18), transparent 55%),
+    radial-gradient(
+      circle at 15% 0%,
+      rgba(200, 162, 74, 0.18),
+      transparent 55%
+    ),
     linear-gradient(180deg, var(--ink-700), var(--ink-900));
   border: 1px solid rgba(200, 162, 74, 0.45);
   border-radius: var(--radius-lg);

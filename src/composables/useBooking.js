@@ -12,6 +12,12 @@ import { ANY_BARBER, getBarberBySlug } from '../data/barbers.js'
 import { getAvailableTimeSlots, getTimeSlots, shopToday } from '../utils/openingHours.js'
 import { endTimeFrom, formatLongDate, formatTimeLabel } from '../utils/datetime.js'
 import {
+  discountedPrice,
+  isDiscountEligibleForService,
+  FIRST_HAIRCUT_DISCOUNT_PERCENT,
+  useWelcomeOffer,
+} from './useWelcomeOffer.js'
+import {
   validateBarber,
   validateBookingDate,
   validateBookingTime,
@@ -76,6 +82,10 @@ function recordBooking(booking) {
 }
 
 function buildBooking(form, service, barber) {
+  const welcomeOffer = useWelcomeOffer()
+  const discountApplies = welcomeOffer.isEligible.value && isDiscountEligibleForService(service)
+  const discountAmount = discountApplies ? service.price - discountedPrice(service.price) : 0
+
   return {
     reference: buildReference(),
     createdAt: new Date().toISOString(),
@@ -88,6 +98,9 @@ function buildBooking(form, service, barber) {
     serviceSlug: service.slug,
     serviceName: service.name,
     servicePrice: service.price,
+    discountPercent: discountApplies ? FIRST_HAIRCUT_DISCOUNT_PERCENT : 0,
+    discountAmount,
+    finalPrice: service.price - discountAmount,
     durationMinutes: service.duration,
     barberSlug: barber.slug,
     barberName: barber.slug === ANY_BARBER ? 'Any available barber' : barber.name,
@@ -213,6 +226,10 @@ function submitBooking() {
 
   recordBooking(booking)
   state.confirmation = booking
+
+  if (booking.discountPercent > 0) {
+    useWelcomeOffer().markDiscountUsed()
+  }
 
   return { ok: true, booking }
 }

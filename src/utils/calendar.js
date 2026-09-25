@@ -47,7 +47,10 @@ export function buildEventDetails(booking, now = new Date()) {
     `Barber: ${barberLabel}`,
     `Client: ${booking.fullName}`,
     `Contact number: ${booking.phone}`,
-    `Price: ${shop.currencySymbol}${booking.servicePrice}`,
+    `Price: ${shop.currencySymbol}${booking.finalPrice ?? booking.servicePrice}`,
+    ...(booking.discountPercent
+      ? [`Discount: ${booking.discountPercent}% first haircut discount (original ${shop.currencySymbol}${booking.servicePrice})`]
+      : []),
     `Booking reference: ${booking.reference}`,
     '',
     `Please arrive five minutes before ${formatTimeLabel(booking.time)} so your chair is ready.`,

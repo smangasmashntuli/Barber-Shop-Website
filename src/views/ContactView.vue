@@ -1,33 +1,35 @@
 <script setup>
-import { watch } from 'vue'
-import { useRoute } from 'vue-router'
-import { addressLines, openingHours, shop } from '../data/site.js'
-import { formatHoursLabel } from '../utils/openingHours.js'
-import { useBooking } from '../composables/useBooking.js'
-import { useShopStatus } from '../composables/useShopStatus.js'
-import BookingForm from '../components/booking/BookingForm.vue'
-import BookingConfirmation from '../components/booking/BookingConfirmation.vue'
-import ShopMap from '../components/ui/ShopMap.vue'
-import AppIcon from '../components/ui/AppIcon.vue'
+import { watch } from "vue";
+import { useRoute } from "vue-router";
+import { addressLines, openingHours, shop } from "../data/site.js";
+import { formatHoursLabel } from "../utils/openingHours.js";
+import { useBooking } from "../composables/useBooking.js";
+import { useShopStatus } from "../composables/useShopStatus.js";
+import BookingForm from "../components/booking/BookingForm.vue";
+import BookingConfirmation from "../components/booking/BookingConfirmation.vue";
+import ShopMap from "../components/ui/ShopMap.vue";
+import AppIcon from "../components/ui/AppIcon.vue";
 
-const route = useRoute()
-const booking = useBooking()
+const route = useRoute();
+const booking = useBooking();
 
-const status = useShopStatus()
-const confirmation = booking.confirmation
+const status = useShopStatus();
+const confirmation = booking.confirmation;
 
-const todayName = new Intl.DateTimeFormat('en-ZA', { weekday: 'long' }).format(new Date())
+const todayName = new Intl.DateTimeFormat("en-ZA", { weekday: "long" }).format(
+  new Date(),
+);
 
 // "Book this service" and "Book with Kagiso" links arrive as query parameters,
 // so the form is already filled in by the time the client lands here.
 watch(
   () => route.query,
   (query) => {
-    if (confirmation.value) return
-    booking.applyPresets({ service: query.service, barber: query.barber })
+    if (confirmation.value) return;
+    booking.applyPresets({ service: query.service, barber: query.barber });
   },
   { immediate: true },
-)
+);
 </script>
 
 <template>
@@ -37,11 +39,15 @@ watch(
         <p class="eyebrow">Contact &amp; booking</p>
         <h1>Reserve your chair in under a minute</h1>
         <p class="lead">
-          Choose your service, barber, date and time. You will get a confirmation with the exact appointment
-          and a calendar file you can add to your phone. Nothing is charged online — you pay in the shop.
+          Choose your service, barber, date and time. You will get a
+          confirmation with the exact appointment and a calendar file you can
+          add to your phone. Nothing is charged online — you pay in the shop.
         </p>
         <p class="contact__status">
-          <span class="pill" :class="status.isOpen ? 'pill--open' : 'pill--closed'">
+          <span
+            class="pill"
+            :class="status.isOpen ? 'pill--open' : 'pill--closed'"
+          >
             <span class="dot" aria-hidden="true"></span>
             {{ status.headline }}
           </span>
@@ -54,10 +60,13 @@ watch(
       <div class="shell">
         <div class="section-head">
           <p class="eyebrow">Booking</p>
-          <h2>{{ confirmation ? 'Booking confirmed' : 'Book an appointment' }}</h2>
+          <h2>
+            {{ confirmation ? "Booking confirmed" : "Book an appointment" }}
+          </h2>
           <p v-if="!confirmation" class="lead">
-            Every field is checked as you go. Times shown are real open slots for the service you pick, so
-            nothing here can be booked outside trading hours.
+            Every field is checked as you go. Times shown are real open slots
+            for the service you pick, so nothing here can be booked outside
+            trading hours.
           </p>
         </div>
 
@@ -72,8 +81,9 @@ watch(
           <p class="eyebrow">Find us</p>
           <h2>{{ shop.address.line1 }}, {{ shop.address.suburb }}</h2>
           <p class="lead">
-            The map below is pinned on our front door on Browning Road. Open directions and your phone will
-            route you straight to the shop. Walk-ins are welcome any day the shop is open.
+            The map below is pinned on our front door on Browning Road. Open
+            directions and your phone will route you straight to the shop.
+            Walk-ins are welcome any day the shop is open.
           </p>
         </div>
 
@@ -99,29 +109,41 @@ watch(
                   <AppIcon name="phone" :size="17" />
                   <span>
                     <a :href="shop.phone.href">{{ shop.phone.label }}</a>
-                    <span class="small muted">Call for same-day availability</span>
+                    <span class="small muted"
+                      >Call for same-day availability</span
+                    >
                   </span>
                 </li>
                 <li>
                   <AppIcon name="mail" :size="17" />
                   <span>
                     <a :href="shop.email.href">{{ shop.email.label }}</a>
-                    <span class="small muted">Replies within one working day</span>
+                    <span class="small muted"
+                      >Replies within one working day</span
+                    >
                   </span>
                 </li>
                 <li>
                   <AppIcon name="external" :size="17" />
                   <span>
-                    <a :href="shop.whatsapp.href" target="_blank" rel="noopener noreferrer">
+                    <a
+                      :href="shop.whatsapp.href"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {{ shop.whatsapp.label }}
                     </a>
-                    <span class="small muted">Send a photo for a style quote</span>
+                    <span class="small muted"
+                      >Send a photo for a style quote</span
+                    >
                   </span>
                 </li>
                 <li>
                   <AppIcon name="pin" :size="17" />
                   <address>
-                    <span v-for="line in addressLines" :key="line">{{ line }}</span>
+                    <span v-for="line in addressLines" :key="line">{{
+                      line
+                    }}</span>
                   </address>
                 </li>
               </ul>
@@ -137,14 +159,16 @@ watch(
                 >
                   <span>
                     {{ entry.day }}
-                    <span v-if="entry.day === todayName" class="hours__badge">Today</span>
+                    <span v-if="entry.day === todayName" class="hours__badge"
+                      >Today</span
+                    >
                   </span>
                   <span>{{ formatHoursLabel(entry) }}</span>
                 </li>
               </ul>
               <p class="small muted">
-                Wednesday and Friday are our late nights. Sundays are short days reserved mostly for
-                kids' cuts, so book those early.
+                Friday is our late night. Sundays close at 15:00, so book
+                popular slots early.
               </p>
             </div>
 
@@ -154,7 +178,12 @@ watch(
                 <li v-for="social in shop.socials" :key="social.name">
                   <AppIcon name="external" :size="17" />
                   <span>
-                    <a :href="social.href" target="_blank" rel="noopener noreferrer">{{ social.name }}</a>
+                    <a
+                      :href="social.href"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >{{ social.name }}</a
+                    >
                     <span class="small muted">{{ social.handle }}</span>
                   </span>
                 </li>
@@ -175,22 +204,25 @@ watch(
           <div class="card">
             <h3>Arrive five minutes early</h3>
             <p class="muted">
-              Your slot is reserved from the minute you booked it. Arriving more than ten minutes late may
-              mean shortening the service so the next client is not pushed back.
+              Your slot is reserved from the minute you booked it. Arriving more
+              than ten minutes late may mean shortening the service so the next
+              client is not pushed back.
             </p>
           </div>
           <div class="card">
             <h3>Moved or cancelled plans</h3>
             <p class="muted">
-              Call or WhatsApp the shop at least four hours before your slot and we will move you free of
-              charge. Later than that, we may have to charge for the chair.
+              Call or WhatsApp the shop at least four hours before your slot and
+              we will move you free of charge. Later than that, we may have to
+              charge for the chair.
             </p>
           </div>
           <div class="card">
             <h3>Bring your inspiration</h3>
             <p class="muted">
-              Photos help. Add a note in the booking form or show your barber on arrival — we will tell you
-              honestly whether the style suits your hair and growth pattern.
+              Photos help. Add a note in the booking form or show your barber on
+              arrival — we will tell you honestly whether the style suits your
+              hair and growth pattern.
             </p>
           </div>
         </div>

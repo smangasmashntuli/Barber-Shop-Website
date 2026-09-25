@@ -75,11 +75,11 @@ export const streetAddress = `${shop.address.line1}, ${shop.address.suburb}, ${s
 export const openingHours = [
   { day: 'Monday', short: 'Mon', open: '08:30', close: '18:00' },
   { day: 'Tuesday', short: 'Tue', open: '08:30', close: '18:00' },
-  { day: 'Wednesday', short: 'Wed', open: '08:30', close: '19:30' },
+  { day: 'Wednesday', short: 'Wed', open: '08:30', close: '18:00' },
   { day: 'Thursday', short: 'Thu', open: '08:30', close: '18:00' },
   { day: 'Friday', short: 'Fri', open: '08:30', close: '19:00' },
   { day: 'Saturday', short: 'Sat', open: '08:00', close: '17:00' },
-  { day: 'Sunday', short: 'Sun', open: '09:00', close: '13:00' },
+  { day: 'Sunday', short: 'Sun', open: '09:00', close: '15:00' },
 ]
 
 export const bookingConfig = {
@@ -92,7 +92,7 @@ export const bookingConfig = {
 export const trustPoints = [
   {
     title: 'Open seven days',
-    detail: 'Mon–Sat from 08:30, Sundays from 09:00. Late nights on Wednesday and Friday.',
+    detail: 'Mon–Sat from 08:30, Sundays from 09:00. Friday is our late night.',
     icon: 'clock',
   },
   {

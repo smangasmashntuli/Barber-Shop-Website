@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import {
   getServicesByCategory,
   serviceCategories,
@@ -19,6 +19,13 @@ import {
   shopToday,
 } from "../../utils/openingHours.js";
 import AppIcon from "../ui/AppIcon.vue";
+import {
+  discountedPrice,
+  initializeWelcomeOffer,
+  isDiscountEligibleForService,
+  FIRST_HAIRCUT_DISCOUNT_PERCENT,
+  useWelcomeOffer,
+} from "../../composables/useWelcomeOffer.js";
 
 const emit = defineEmits(["submitted"]);
 
@@ -30,6 +37,19 @@ const selectedBarber = booking.selectedBarber;
 const availableSlots = booking.availableSlots;
 const tradingSlots = booking.tradingSlots;
 const previewEndLabel = booking.previewEndLabel;
+const welcomeOffer = useWelcomeOffer();
+
+const discountPreview = computed(() => {
+  const service = selectedService.value;
+  if (!welcomeOffer.isEligible.value || !isDiscountEligibleForService(service))
+    return null;
+
+  return {
+    originalPrice: service.price,
+    discountAmount: service.price - discountedPrice(service.price),
+    finalPrice: discountedPrice(service.price),
+  };
+});
 
 const minDate = shopToday();
 const maxDate = latestBookableDate();
@@ -56,6 +76,10 @@ const needsEarlierDay = computed(
 );
 
 const errorCount = computed(() => Object.keys(errors).length);
+
+onMounted(() => {
+  initializeWelcomeOffer();
+});
 
 function onFieldInput(field, value) {
   booking.setField(field, value);
@@ -403,6 +427,11 @@ function onSubmit() {
                   >· R{{ selectedService.price }} ·
                   {{ selectedService.duration }} min</span
                 >
+                <span v-if="discountPreview" class="booking__discount small">
+                  {{ FIRST_HAIRCUT_DISCOUNT_PERCENT }}% first haircut discount:
+                  -R{{ discountPreview.discountAmount }}
+                  <strong>Pay R{{ discountPreview.finalPrice }}</strong>
+                </span>
               </template>
               <span v-else class="muted">Not selected yet</span>
             </dd>
@@ -443,8 +472,8 @@ function onSubmit() {
           Confirm booking
         </button>
         <p class="small muted">
-          You will get a confirmation with a calendar file and a Google Calendar
-          link. Nothing is charged online; you pay in the shop.
+          Your confirmation and calendar event will show the final amount.
+          Nothing is charged online; you pay in the shop.
         </p>
       </aside>
     </div>
@@ -591,6 +620,17 @@ function onSubmit() {
 
 .summary dd {
   margin: 0;
+}
+
+.booking__discount {
+  display: grid;
+  gap: 0.15rem;
+  margin-top: 0.35rem;
+  color: var(--success);
+}
+
+.booking__discount strong {
+  color: var(--cream);
 }
 
 @media (max-width: 900px) {

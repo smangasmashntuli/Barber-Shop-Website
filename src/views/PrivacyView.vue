@@ -40,7 +40,7 @@ const sections = [
     id: "cookies",
     title: "4. Cookies and local storage",
     paragraphs: [
-      "We do not run any advertising or tracking cookies of our own. The site stores one small session flag in your browser to remember that you have already seen the first-visit offer, so it does not pop up again during the same browser session. The booking form itself is held in memory while you use the page and is not saved to browser storage by this application. The offer flag contains no personal information and normally clears when the browser session ends.",
+      "We do not run any advertising or tracking cookies of our own. The site stores a randomly generated visitor token and a one-time discount-used flag in your browser's local storage so the automatic 30% first-haircut offer can remain available across visits and stop after it is used. It also stores a temporary session flag so the offer modal does not repeatedly appear during one visit. None of these flags contains your name, contact details or booking information. The booking form itself is held in memory while you use the page and is not saved to browser storage by this application.",
       "The only third-party content on the site is the map on the contact page. It is an embedded Google Maps frame, so when it loads Google receives the request for it, including your IP address, and may set its own cookies. That part of the page is covered by Google\u2019s privacy policy rather than ours. The map is optional: the street address, phone number and opening hours are listed next to it, and the directions button opens Google Maps only when you choose to click it.",
     ],
   },

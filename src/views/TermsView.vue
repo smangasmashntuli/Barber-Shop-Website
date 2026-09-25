@@ -38,9 +38,9 @@ const clauses = [
     title: "4. Prices, payment and promotions",
     bullets: [
       `All prices are quoted in South African Rand (${shop.currencyCode}) and include VAT.`,
-      "The price on the price list or on this website is the price you pay for the service you booked. If your barber recommends additional work, the extra service and its price are confirmed with you before the work starts.",
+      "The price on the price list or on this website is the price before any eligible automatic discount. If your barber recommends additional work, the extra service and its price are confirmed with you before the work starts.",
       "Payment is made in the shop by card or cash when the service is complete. No card details are taken on this website and no deposit is required for any booking.",
-      "Promotional codes (for example the first-visit code SMASH50) must be mentioned before payment, apply once per client unless stated otherwise, cannot be exchanged for cash and may not be combined with other offers.",
+      "The first-haircut offer gives eligible new clients 30% off one service in the Haircuts & Fades category. It is applied automatically before payment, cannot be exchanged for cash, and is not available again after it has been used. It does not apply to beard services, grooming extras or packages.",
       "Prices are reviewed from time to time. The price published at the moment you book is the price that applies to that appointment.",
     ],
   },

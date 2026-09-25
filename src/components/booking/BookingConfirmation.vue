@@ -1,31 +1,31 @@
 <script setup>
-import { computed, ref } from 'vue'
-import { RouterLink } from 'vue-router'
-import { shop, addressLines } from '../../data/site.js'
-import { useBooking } from '../../composables/useBooking.js'
+import { computed, ref } from "vue";
+import { RouterLink } from "vue-router";
+import { shop, addressLines } from "../../data/site.js";
+import { useBooking } from "../../composables/useBooking.js";
 import {
   buildEventDetails,
   buildGoogleCalendarUrl,
   downloadAppointmentIcs,
   icsFileName,
-} from '../../utils/calendar.js'
-import AppIcon from '../ui/AppIcon.vue'
+} from "../../utils/calendar.js";
+import AppIcon from "../ui/AppIcon.vue";
 
 const props = defineProps({
   booking: { type: Object, required: true },
-})
+});
 
-const bookingStore = useBooking()
+const bookingStore = useBooking();
 
 /** Both calendar options read from the same event object built from the real booking. */
-const event = computed(() => buildEventDetails(props.booking))
-const googleCalendarUrl = computed(() => buildGoogleCalendarUrl(props.booking))
-const downloadMessage = ref('')
+const event = computed(() => buildEventDetails(props.booking));
+const googleCalendarUrl = computed(() => buildGoogleCalendarUrl(props.booking));
+const downloadMessage = ref("");
 
 function onDownloadIcs() {
-  const fileName = icsFileName(props.booking)
-  downloadAppointmentIcs(props.booking)
-  downloadMessage.value = `${fileName} downloaded. Open it to add the appointment to Apple Calendar, Outlook or Google Calendar.`
+  const fileName = icsFileName(props.booking);
+  downloadAppointmentIcs(props.booking);
+  downloadMessage.value = `${fileName} downloaded. Open it to add the appointment to Apple Calendar, Outlook or Google Calendar.`;
 }
 </script>
 
@@ -39,8 +39,9 @@ function onDownloadIcs() {
         <p class="eyebrow">Booking confirmed</p>
         <h2>Your chair is booked, {{ booking.firstName }}</h2>
         <p class="lead">
-          We have you in at {{ event.startLocalLabel }} on {{ event.dateLabel }}. Take a copy of the
-          appointment with you using the calendar buttons below.
+          We have you in at {{ event.startLocalLabel }} on
+          {{ event.dateLabel }}. Take a copy of the appointment with you using
+          the calendar buttons below.
         </p>
       </div>
     </div>
@@ -58,7 +59,21 @@ function onDownloadIcs() {
         <dt>Service</dt>
         <dd>
           {{ booking.serviceName }}
-          <span class="muted small">· {{ booking.durationMinutes }} min · R{{ booking.servicePrice }}</span>
+          <span class="muted small"
+            >· {{ booking.durationMinutes }} min · R{{
+              booking.servicePrice
+            }}</span
+          >
+          <span
+            v-if="booking.discountPercent"
+            class="confirmation__discount small"
+          >
+            {{ booking.discountPercent }}% first haircut discount: -R{{
+              booking.discountAmount
+            }}
+            ·
+            <strong>Pay R{{ booking.finalPrice }}</strong>
+          </span>
         </dd>
       </div>
       <div>
@@ -95,8 +110,9 @@ function onDownloadIcs() {
     <div class="confirmation__calendar">
       <h3>Add it to your calendar</h3>
       <p class="muted">
-        Both options are generated from this booking: {{ booking.serviceName }} with
-        {{ event.barberLabel }} at {{ event.startLocalLabel }} – {{ event.endLocalLabel }}, at
+        Both options are generated from this booking:
+        {{ booking.serviceName }} with {{ event.barberLabel }} at
+        {{ event.startLocalLabel }} – {{ event.endLocalLabel }}, at
         {{ shop.name }}.
       </p>
       <div class="btn-row">
@@ -133,28 +149,42 @@ function onDownloadIcs() {
       <ul>
         <li>
           <AppIcon name="clock" :size="16" />
-          <span>Arrive five minutes early — the chair is held for you, not the whole shop.</span>
+          <span
+            >Arrive five minutes early — the chair is held for you, not the
+            whole shop.</span
+          >
         </li>
         <li>
           <AppIcon name="phone" :size="16" />
           <span>
-            Need to move it? Call <a :href="shop.phone.href">{{ shop.phone.label }}</a> at least four hours
-            before your slot.
+            Need to move it? Call
+            <a :href="shop.phone.href">{{ shop.phone.label }}</a> at least four
+            hours before your slot.
           </span>
         </li>
         <li>
           <AppIcon name="tag" :size="16" />
-          <span>Pay in the shop by card or cash. Nothing is charged online.</span>
+          <span
+            >Pay in the shop by card or cash. Nothing is charged online.</span
+          >
         </li>
       </ul>
     </div>
 
     <div class="btn-row confirmation__actions">
-      <button type="button" class="btn btn--primary" @click="bookingStore.startNewBooking()">
+      <button
+        type="button"
+        class="btn btn--primary"
+        @click="bookingStore.startNewBooking()"
+      >
         Book another appointment
       </button>
-      <RouterLink class="btn btn--ghost" :to="{ name: 'services' }">Back to services &amp; prices</RouterLink>
-      <RouterLink class="btn btn--quiet" :to="{ name: 'terms' }">Read the booking terms</RouterLink>
+      <RouterLink class="btn btn--ghost" :to="{ name: 'services' }"
+        >Back to services &amp; prices</RouterLink
+      >
+      <RouterLink class="btn btn--quiet" :to="{ name: 'terms' }"
+        >Read the booking terms</RouterLink
+      >
     </div>
   </div>
 </template>
@@ -167,7 +197,11 @@ function onDownloadIcs() {
   border: 1px solid rgba(200, 162, 74, 0.45);
   border-radius: var(--radius-lg);
   background:
-    radial-gradient(circle at 10% 0%, rgba(200, 162, 74, 0.16), transparent 50%),
+    radial-gradient(
+      circle at 10% 0%,
+      rgba(200, 162, 74, 0.16),
+      transparent 50%
+    ),
     linear-gradient(180deg, var(--ink-700), var(--ink-900));
   box-shadow: var(--shadow-card);
 }
@@ -191,6 +225,16 @@ function onDownloadIcs() {
 
 .confirmation h2 {
   margin-bottom: 0.35rem;
+}
+
+.confirmation__discount {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--success);
+}
+
+.confirmation__discount strong {
+  color: var(--cream);
 }
 
 .confirmation h3 {

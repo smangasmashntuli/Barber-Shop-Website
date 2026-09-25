@@ -69,19 +69,19 @@ check('15:00 shop time equals 13:00Z', () => {
 
 // ------------------------------------------------------------- slot generation
 
-check('Wednesday (08:30-19:30) gives the first slot at 08:30 and the last at 18:45 for a 45 min service', () => {
+check('Wednesday (08:30-18:00) gives the first slot at 08:30 and the last at 17:15 for a 45 min service', () => {
   const slots = getTimeSlots('2026-09-30', 45)
-  assert.equal(slots.length, 42)
+  assert.equal(slots.length, 36)
   assert.equal(slots[0].value, '08:30')
-  assert.equal(slots.at(-1).value, '18:45')
-  assert.equal(slots.at(-1).label, '6:45 PM')
+  assert.equal(slots.at(-1).value, '17:15')
+  assert.equal(slots.at(-1).label, '5:15 PM')
 })
 
-check('Sunday (09:00-13:00) never offers a slot that would run past closing for a 90 min service', () => {
+check('Sunday (09:00-15:00) never offers a slot that would run past closing for a 90 min service', () => {
   const slots = getTimeSlots('2026-10-04', 90)
   assert.equal(slots[0].value, '09:00')
-  assert.equal(slots.at(-1).value, '11:30')
-  assert.equal(slots.length, 11)
+  assert.equal(slots.at(-1).value, '13:30')
+  assert.equal(slots.length, 19)
 })
 
 check('Past slots are hidden: at 15:20 only 15:30 onwards can be booked', () => {
@@ -95,7 +95,7 @@ check('Open status reports the shop as open during trading hours', () => {
   const duringTheDay = shopLocalToUtcInstant('2026-09-30', '12:00', 'Africa/Johannesburg')
   const status = getOpenStatus(duringTheDay)
   assert.equal(status.isOpen, true)
-  assert.match(status.detail, /7:30 PM/)
+  assert.match(status.detail, /Closing at 18:00/)
 })
 
 // ------------------------------------------------------------------ validation

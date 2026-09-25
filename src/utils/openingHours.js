@@ -19,6 +19,10 @@ import {
   todayIsoInTimeZone,
 } from './datetime.js'
 
+function format24HourLabel(value) {
+  return /^\d{2}:\d{2}$/.test(String(value)) ? String(value) : ''
+}
+
 /** Trading hours keyed by JS day index (0 = Sunday). */
 const hoursByDayIndex = openingHours.reduce((map, entry, index) => {
   const dayIndex = (index + 1) % 7
@@ -44,7 +48,7 @@ export function isClosedOnIsoDate(isoDate) {
 
 export function formatHoursLabel(hours) {
   if (!hours) return 'Closed'
-  return `${formatTimeLabel(hours.open)} – ${formatTimeLabel(hours.close)}`
+  return `${format24HourLabel(hours.open)} – ${format24HourLabel(hours.close)}`
 }
 
 /**
@@ -116,7 +120,7 @@ export function getOpenStatus(now = new Date()) {
     return {
       isOpen: false,
       headline: 'Closed today',
-      detail: nextOpen ? `Opens ${nextOpen.dayLabel} at ${formatTimeLabel(nextOpen.hours.open)}` : 'Closed',
+      detail: nextOpen ? `Opens ${nextOpen.dayLabel} at ${format24HourLabel(nextOpen.hours.open)}` : 'Closed',
     }
   }
 
@@ -127,7 +131,7 @@ export function getOpenStatus(now = new Date()) {
     return {
       isOpen: false,
       headline: 'Closed right now',
-      detail: `Opens today at ${formatTimeLabel(hours.open)}`,
+      detail: `Opens today at ${format24HourLabel(hours.open)}`,
     }
   }
 
@@ -136,14 +140,14 @@ export function getOpenStatus(now = new Date()) {
     return {
       isOpen: false,
       headline: 'Closed for today',
-      detail: nextOpen ? `Opens ${nextOpen.dayLabel} at ${formatTimeLabel(nextOpen.hours.open)}` : 'Closed',
+      detail: nextOpen ? `Opens ${nextOpen.dayLabel} at ${format24HourLabel(nextOpen.hours.open)}` : 'Closed',
     }
   }
 
   return {
     isOpen: true,
     headline: 'Open now',
-    detail: `Closing at ${formatTimeLabel(hours.close)}`,
+    detail: `Closing at ${format24HourLabel(hours.close)}`,
   }
 }
 
