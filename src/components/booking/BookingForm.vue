@@ -171,7 +171,8 @@ function onSubmit() {
                 {{ errors.email }}
               </p>
               <p v-else class="field__hint">
-                We send your confirmation and reminders here.
+                The shop can use this contact detail if your appointment needs
+                attention.
               </p>
             </div>
 

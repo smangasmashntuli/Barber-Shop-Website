@@ -50,7 +50,7 @@ export const shop = {
   },
 
   socials: [
-    { name: 'Facebook', handle: '@smashbarbershop', href: 'https://www.facebook.com/smashbarbershop' },
+    { name: 'Facebook', handle: '@smashbarbershop', href: 'https://www.facebook.com/share/1J47mnraFH/' },
     { name: 'Instagram', handle: '@smashbarbershop', href: 'https://www.instagram.com/smashbarbershop' },
     { name: 'TikTok', handle: '@smashbarbershop', href: 'https://www.tiktok.com/@smashbarbershop' },
   ],
