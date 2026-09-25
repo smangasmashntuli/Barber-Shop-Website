@@ -1,7 +1,14 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView } from 'vue-router'
+import TheHeader from './components/layout/TheHeader.vue'
+import TheFooter from './components/layout/TheFooter.vue'
 </script>
 
 <template>
-  <HelloWorld />
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <TheHeader />
+  <main id="main-content">
+    <RouterView />
+  </main>
+  <TheFooter />
 </template>
