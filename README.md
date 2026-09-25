@@ -1,125 +1,848 @@
-# SMASH Barbershop — Vue 3 website
+# SMASH BarberShop Website
 
-A production-quality, client-ready barbershop website built for the Talent Forge junior full-stack
-practical assessment: four core pages, a working end-to-end booking flow, and calendar integration that
-generates real `.ics` files and Google Calendar links from the booking the client actually made.
+> **Affordable cuts. Student style. Cape Town.**
 
+SMASH is a modern, student-focused barbershop located in **Observatory, Cape Town**. The website is designed to provide students with an affordable, convenient, and professional way to discover grooming services and book appointments.
+
+The project is being developed as a practical full-stack web application and is intended to demonstrate professional frontend development, responsive design, user experience, booking functionality, and calendar integration.
+
+---
+
+## 1. Project Overview
+
+### Business Name
+
+**SMASH**
+
+### Business Type
+
+Student-focused barbershop
+
+### Location
+
+**Observatory, Cape Town, South Africa**
+
+### Target Audience
+
+The primary target audience is **students living, studying, or spending time in Observatory and surrounding areas**.
+
+SMASH is designed around the idea that students should be able to maintain their appearance without paying premium salon/barbershop prices.
+
+### Core Value Proposition
+
+> **Quality haircuts at student-friendly prices.**
+
+SMASH aims to provide:
+
+- Affordable haircuts
+- Convenient online booking
+- A modern and welcoming environment
+- Straightforward pricing
+- Professional barber services
+- Convenient appointment management
+
+---
+
+# 2. Project Purpose
+
+The purpose of the SMASH website is to create a realistic digital presence for the barbershop.
+
+The website should allow a potential customer to:
+
+1. Discover SMASH.
+2. Understand the services offered.
+3. View prices.
+4. Learn about the barbershop and its barbers.
+5. Find the shop's location and opening hours.
+6. Select a service.
+7. Select a barber where applicable.
+8. Select an appointment date and time.
+9. Provide customer information.
+10. Complete a booking.
+11. Add the appointment to their calendar.
+
+The website should feel like a **real business website that could be launched for an actual barbershop**, rather than a simple academic/demo website.
+
+---
+
+# 3. Brand Identity
+
+## 3.1 Brand Name
+
+**SMASH**
+
+The name is intentionally short, memorable, and easy to recognise.
+
+The brand should communicate:
+
+- Confidence
+- Youth
+- Energy
+- Accessibility
+- Modern grooming
+- Student culture
+
+---
+
+## 3.2 Brand Positioning
+
+SMASH is positioned as a:
+
+> **Modern, affordable student barbershop in Observatory.**
+
+The brand should avoid presenting itself as an expensive luxury grooming studio.
+
+Instead, SMASH should feel:
+
+- Modern
+- Affordable
+- Friendly
+- Youthful
+- Professional
+- Accessible
+- Local
+
+---
+
+# 4. Target Users
+
+## Primary Users
+
+Students who need affordable grooming services.
+
+Examples include:
+
+- University students
+- College students
+- Students living in Observatory
+- Students commuting through Observatory
+- Young adults looking for affordable grooming
+
+## User Needs
+
+The website should make it easy for users to:
+
+- Quickly understand prices
+- See available services
+- Find the barbershop
+- Check opening hours
+- Book an appointment
+- Select a convenient time
+- Add the appointment to their calendar
+- Use the website comfortably on a mobile phone
+
+---
+
+# 5. Website Goals
+
+The website should achieve the following goals:
+
+### Business Goals
+
+- Establish SMASH's online presence.
+- Present the barbershop professionally.
+- Make services and pricing easy to understand.
+- Increase appointment bookings.
+- Make the booking process convenient.
+- Build trust with potential customers.
+
+### User Goals
+
+- Find information quickly.
+- Understand pricing before booking.
+- Easily select a service.
+- Easily select an appointment.
+- Receive useful appointment information.
+- Add the appointment to their calendar.
+
+---
+
+# 6. Website Pages
+
+The website will contain, at minimum, the following pages.
+
+## Home
+
+The homepage will introduce SMASH and provide a clear path toward booking.
+
+Expected sections:
+
+- Hero section
+- Brand introduction
+- Featured services
+- Student-focused value proposition
+- Featured barbers
+- Call-to-action
+- Location information
+- Opening hours
+- Footer
+
+Primary CTA:
+
+> **Book Your Cut**
+
+---
+
+## Services
+
+The Services page will display available grooming services and their prices.
+
+Potential services include:
+
+- Classic Haircut
+- Fade
+- Skin Fade
+- Beard Trim
+- Haircut + Beard
+- Kids Cut
+- Student Specials
+
+Final services and prices will be defined as part of the project content.
+
+Pricing should be clearly displayed and easy to understand.
+
+---
+
+## About
+
+The About page will introduce:
+
+- SMASH
+- The barbershop's story
+- Its student-focused approach
+- The barbers
+- The shop's philosophy
+
+The content should communicate that SMASH was created to provide students with accessible and professional grooming.
+
+---
+
+## Booking
+
+The Booking page will provide the main appointment workflow.
+
+The customer should be able to select:
+
+1. Service
+2. Barber
+3. Date
+4. Time
+5. Customer information
+
+The system should then allow the customer to confirm the appointment.
+
+---
+
+## Contact
+
+The Contact section/page will provide:
+
+- Physical location
+- Contact information
+- Opening hours
+- Social media links
+- Map/location information
+- Booking CTA
+
+---
+
+## Terms & Conditions
+
+The website will contain a proper Terms & Conditions page.
+
+The page must contain actual business terms and must not be a placeholder.
+
+---
+
+# 7. Booking System
+
+Booking is one of the core features of the SMASH website.
+
+The booking flow should follow:
+
+```text
+Select Service
+      ↓
+Select Barber
+      ↓
+Select Date
+      ↓
+Select Time
+      ↓
+Enter Customer Details
+      ↓
+Review Appointment
+      ↓
+Confirm Booking
+      ↓
+Booking Confirmation
+      ↓
+Add To Calendar
 ```
-Barber-Shop-Website/
-├─ barbershop-vuejs-build-prompt.md     # the brief this build follows
-├─ vue-app/                             # the application (Vue 3 + Vite + Vue Router)
-│  ├─ BRAND.md                          # internal brand/style reference (colours, type, logo rules)
-│  ├─ netlify.toml                      # SPA-ready static host config
-│  └─ src/
-├─ .github/workflows/deploy-pages.yml   # optional GitHub Pages deployment
-└─ README.md
+
+The system should validate the customer's input before completing the booking.
+
+The selected booking information must be retained throughout the process.
+
+---
+
+# 8. Calendar Integration
+
+The website must support adding a customer's appointment to their calendar.
+
+The calendar event should dynamically use the customer's selected appointment.
+
+For example:
+
+```text
+Business: SMASH Barbershop
+Service: Student Fade
+Barber: Selected Barber
+Date: Selected Date
+Start: Selected Time
+End: Calculated End Time
+Location: Observatory, Cape Town
 ```
 
-## Quick start
+The calendar integration must not rely on a single hard-coded appointment.
 
-```bash
-cd vue-app
-npm install
-npm run dev        # http://localhost:5173
+### Supported Calendar Usage
+
+The implementation should support:
+
+- Google Calendar
+- Apple Calendar-compatible calendar events
+
+An `.ics` calendar file may be generated for calendar applications that support calendar-event imports.
+
+---
+
+# 9. Popup / Modal
+
+The website will contain at least one purposeful popup/modal.
+
+The popup should support the business experience rather than exist purely to satisfy a technical requirement.
+
+Possible uses:
+
+- Student discount
+- First-visit offer
+- Booking promotion
+- Special offer
+- SMASH announcement
+
+Example:
+
+> **STUDENT SPECIAL**
+>
+> Fresh cut. Student price.
+>
+> Show your valid student ID when you arrive.
+>
+> **Book Your Cut**
+
+The popup must be dismissible.
+
+---
+
+# 10. Visual Design
+
+The visual identity should be consistent across the entire website.
+
+## Design Direction
+
+SMASH should feel:
+
+- Modern
+- Youthful
+- Clean
+- Confident
+- Affordable
+- Urban
+- Student-oriented
+
+The design should avoid looking overly corporate or excessively luxurious.
+
+---
+
+## Colour Palette
+
+The final colour palette will be defined during the visual identity phase.
+
+The palette should provide:
+
+- Strong contrast
+- Accessible text
+- Consistent buttons
+- Clear hierarchy
+- Consistent branding
+
+Colours should be used deliberately rather than decorating the interface unnecessarily.
+
+---
+
+# 11. Typography
+
+Typography should establish a clear hierarchy between:
+
+- Main headings
+- Section headings
+- Body text
+- Navigation
+- Buttons
+- Prices
+- Booking information
+
+The selected fonts must remain readable across desktop and mobile devices.
+
+---
+
+# 12. Photography & Imagery
+
+The website will use high-quality barber/barbershop imagery.
+
+Images may be:
+
+- AI-generated
+- Professionally sourced
+- Stock imagery
+- Custom-created
+
+AI-generated imagery may be used to establish a consistent fictional SMASH environment.
+
+The imagery should maintain a consistent visual style throughout the website.
+
+Images should not be:
+
+- Stretched
+- Pixelated
+- Poorly cropped
+- Irrelevant
+- Visually inconsistent
+
+---
+
+# 13. Responsive Design
+
+The website must be responsive.
+
+It should support:
+
+- Desktop
+- Laptop
+- Tablet
+- Mobile
+
+The mobile experience is especially important because the target audience consists heavily of students who are likely to access the booking system from their phones.
+
+The following must remain usable on smaller screens:
+
+- Navigation
+- Buttons
+- Forms
+- Service cards
+- Booking controls
+- Images
+- Calendar actions
+- Footer
+
+Horizontal overflow should be avoided.
+
+---
+
+# 14. Technology Stack
+
+## Frontend
+
+### React
+
+React will be used for building the application's component-based user interface.
+
+Potential responsibilities include:
+
+- Page structure
+- Reusable components
+- Booking interface
+- Forms
+- Interactive elements
+- State management
+- API communication
+
+### Vue.js
+
+Vue.js is included in the planned technology stack for the project.
+
+Its use must be clearly defined during implementation to avoid unnecessarily duplicating frontend responsibilities with React.
+
+If both technologies are ultimately used, their responsibilities should be separated intentionally rather than using React and Vue interchangeably within the same components.
+
+---
+
+## Styling
+
+Potential technologies:
+
+- CSS
+- CSS Modules
+- Tailwind CSS
+
+The final styling approach will be selected during implementation.
+
+---
+
+## Backend
+
+A backend may be introduced where required for:
+
+- Booking management
+- Appointment data
+- Customer information
+- API endpoints
+- Business logic
+
+The final backend architecture will be determined based on the actual booking requirements.
+
+---
+
+## Database
+
+A database may be used to persist:
+
+- Services
+- Barbers
+- Appointments
+- Customer information
+- Availability
+
+The database technology will be selected according to implementation requirements.
+
+---
+
+## Calendar Integration
+
+Calendar functionality will be implemented through dynamically generated calendar events.
+
+Potential approaches include:
+
+- Google Calendar event URLs
+- `.ics` calendar files
+- Calendar APIs where necessary
+
+---
+
+## Development Tools
+
+The project may use:
+
+- Git
+- GitHub
+- VS Code
+- AI coding assistants
+- Browser developer tools
+- API testing tools
+
+AI tools may be used during development, but all generated code and functionality must be reviewed, tested, corrected, and understood before deployment.
+
+---
+
+# 15. Project Architecture
+
+The application should follow a modular architecture.
+
+A possible frontend structure:
+
+```text
+src/
+│
+├── components/
+│   ├── Navbar/
+│   ├── Footer/
+│   ├── Button/
+│   ├── ServiceCard/
+│   ├── BarberCard/
+│   ├── BookingForm/
+│   ├── CalendarActions/
+│   └── Modal/
+│
+├── pages/
+│   ├── Home/
+│   ├── Services/
+│   ├── About/
+│   ├── Booking/
+│   ├── Contact/
+│   └── Terms/
+│
+├── data/
+│   ├── services
+│   ├── barbers
+│   └── business
+│
+├── services/
+│   ├── booking
+│   └── calendar
+│
+├── assets/
+│   ├── images/
+│   ├── icons/
+│   └── logo/
+│
+├── styles/
+│
+└── App
 ```
 
-| Script | What it does |
-| --- | --- |
-| `npm run dev` | Vite dev server with hot reload |
-| `npm run build` | Production build into `vue-app/dist` |
-| `npm run preview` | Serves the production build locally |
-| `npm run verify` | 19 headless checks: time-slot rules, validation, timezone conversion and the `.ics` / Google Calendar output for a 3:00 PM booking |
-| `npm run smoke` | 11 route checks through Vue's server renderer: every page, the empty form, the live slot grid, a service switch, deep-linked pre-selection and a submitted booking |
+The exact architecture may change during implementation, but components should remain organised and reusable.
 
-## Pages
+---
 
-| Route | Contents |
-| --- | --- |
-| `/` | Full-bleed shop hero with the primary booking CTA, live open/closed status, real price teasers, quick-info strip, "why SMASH" differentiators, barber team teaser, gallery, closing CTA and the first-visit offer popup |
-| `/services` | All 13 services with real prices (ZAR) and chair times, filterable by category, each card deep-linking into the booking form with that service pre-selected |
-| `/about` | Shop story of a brand-new 2026 shop, first-year timeline, four barber profiles with photos, bios and specialities (each linking to a booking with that barber pre-selected), values and gallery |
-| `/contact` | Full booking flow, business details, seven-day opening hours with today highlighted, social links, embedded Google map pinned on the shop's address, pre-visit guidance |
-| `/terms` | 18 clauses of genuine booking, cancellation, late-arrival, refusal, pricing, hygiene, complaint and liability terms |
-| `/privacy` | POPIA-aware privacy policy covering what is collected, how it is used, storage, session flags, the embedded Google map and client rights |
-| `/booking` | Convenience redirect onto the booking form |
-| anything else | Styled 404 page inside the normal header/footer shell |
+# 16. Functional Requirements
 
-## How the booking flow works
+The following functionality must work:
 
-- **One source of truth.** `src/data/services.js` and `src/data/barbers.js` feed the Services page, the
-  About page, the booking form's selects and the calendar event. A service cannot be priced on one page
-  and priced differently on another.
-- **Real slots only.** `src/utils/openingHours.js` builds the time grid from the shop's published hours
-  (Mon–Fri from 08:30, Wed until 19:30, Fri until 19:00, Sat 08:00–17:00, Sun 09:00–13:00) at 15-minute
-  intervals, and hides any slot that would finish after closing or has already passed. Changing the
-  service recalculates the slots and clears a time that no longer fits.
-- **Validation** (`src/utils/validation.js`) runs per field on blur and on every field at submit, with
-  inline messages plus a summary alert; an incomplete submission is blocked and focus moves to the first
-  problem.
-- **Shared state.** `src/composables/useBooking.js` holds the form, the errors and the confirmed booking
-  in a module-scoped store, so the confirmation card and the calendar buttons read the same submitted
-  object — never an example booking.
-- **Timezone-correct calendar output.** `src/utils/calendar.js` converts the shop-local date and time
-  into a real UTC instant (`Africa/Johannesburg`, UTC+2), sets the end time to start + service duration,
-  and produces both a downloadable `.ics` (Blob + object URL, RFC 5545 line folding included) and a
-  `calendar.google.com/calendar/render?action=TEMPLATE` link that opens in a new tab.
+- Navigation
+- Mobile navigation
+- Booking buttons
+- Service selection
+- Barber selection
+- Date selection
+- Time selection
+- Customer form
+- Booking confirmation
+- Calendar integration
+- Popup/modal
+- Terms & Conditions navigation
+- Contact links
+- Social links
+- Calls to action
 
-Verified example (`npm run verify`): a 45-minute Skin Fade booked for 3:00 PM on a Wednesday produces
-`DTSTART:20260930T130000Z` / `DTEND:20260930T134500Z`, with the shop as organiser, the shop address as
-`LOCATION`, and the barber, price and booking reference in the description.
+Interactive elements should not exist purely for visual purposes.
 
-## Brand
+---
 
-The full style reference — hex values, type scale, logo usage rules, image slots and copy rules — is in
-[`vue-app/BRAND.md`](vue-app/BRAND.md). In short: charcoal (`#0b0d10`) base, warm gold (`#c8a24a`) accent,
-off-white (`#f6f1e7`) text, Cinzel for headings (matching the supplied logo wordmark) and Inter for body
-copy.
+# 17. Booking Validation
 
-## Replacing content
+The booking system should handle invalid situations appropriately.
 
-| What | Where |
-| --- | --- |
-| Shop name, phone, email, address, hours, social links | `vue-app/src/data/site.js` — one file feeds the header, footer, contact page and calendar events |
-| Services, prices, durations | `vue-app/src/data/services.js` |
-| Barbers, roles, bios | `vue-app/src/data/barbers.js` |
-| Photography and logo | `vue-app/src/assets/images/` — keep the file names and no markup needs to change |
+Examples:
 
-All supplied imagery has been placed in those slots with descriptive names (`hero-barber.jpg`,
-`barber-*.jpg`, `service-*.jpg`, `shop-*.jpg`, `logo.png`, `logo-mark.png`).
+- Missing customer name
+- Invalid email
+- Missing service
+- Missing barber
+- Missing date
+- Missing time
+- Invalid appointment time
+- Attempted booking outside business hours
 
-## Deployment
+Where applicable, the interface should clearly communicate the problem to the user.
 
-The build is a static bundle (`vue-app/dist`), so any static host works, and SPA routing config is
-already included.
+---
 
-- **Netlify:** `vue-app/netlify.toml` sets the build command, publish directory and SPA redirect. Run
-  `npx netlify deploy --prod --dir=vue-app/dist` from the repository root, or connect the repo and let
-  Netlify pick the config up.
-- **Vercel:** create a project with root directory `vue-app`, build command `npm run build` and output
-  directory `dist`.
-- **GitHub Pages:** `.github/workflows/deploy-pages.yml` builds with the correct base path, runs
-  `npm run verify`, adds a `404.html` SPA fallback and publishes. Enable Pages → Source: GitHub Actions.
+# 18. User Experience Principles
 
-`vue-app/public/_redirects` provides the same SPA fallback for Netlify-style hosts.
+The website should prioritise:
 
-## Notes and limitations
+### Clarity
 
-- There is no backend: a confirmed booking lives in the browser session (as the brief allows — "store the
-  booking in app state"). It is never sent to a server, and the privacy policy says so plainly.
-- Contact details, address and social URLs are the fictional shop's published details. They all live in
-  `src/data/site.js` so they can be swapped for real details in a single edit.
-- Headings and body copy load Cinzel/Inter from Google Fonts, with serif and system-font fallbacks
-  declared, so the site still renders correctly without a network connection.
+Users should immediately understand what SMASH is.
 
-## Verified before hand-over
+### Affordability
 
-- `npm run verify` — 19/19 checks: slot boundaries per weekday, hidden past slots, live open status,
-  required-field/email/phone/past-date/out-of-hours validation, UTC conversion, `.ics` contents, line
-  folding and the Google Calendar URL.
-- `npm run smoke` — 11/11 route checks: every page renders inside the header/footer shell, the empty
-  booking form shows all required fields, choosing a service and date renders the real slot grid with
-  the correct first/last slot for that service's duration, switching to a longer service clears a time
-  that no longer fits, `?service=` / `?barber=` links pre-select the form, a completed submission renders
-  a confirmation naming the client, service, barber, date and time with working calendar actions, and an
-  empty submit is blocked with inline errors.
-- `npm run build` — production build completes with no errors or unresolved imports.
+Students should quickly understand that SMASH is designed around affordable grooming.
+
+### Convenience
+
+The booking process should require as little unnecessary effort as possible.
+
+### Mobile-first thinking
+
+The booking experience should work particularly well on mobile devices.
+
+### Trust
+
+The website should look like a genuine local business rather than a development project.
+
+---
+
+# 19. Testing Requirements
+
+Before deployment, the complete customer journey must be tested.
+
+Primary test journey:
+
+```text
+Homepage
+   ↓
+Services
+   ↓
+Booking
+   ↓
+Select Service
+   ↓
+Select Barber
+   ↓
+Select Date
+   ↓
+Select Time
+   ↓
+Enter Details
+   ↓
+Complete Booking
+   ↓
+Add Appointment To Calendar
+```
+
+Testing should also cover:
+
+- Desktop
+- Tablet
+- Mobile
+- Navigation
+- Forms
+- Booking validation
+- Calendar generation
+- Popup
+- Links
+- Images
+- Page routes
+- Responsive layouts
+
+---
+
+# 20. Production Quality
+
+Before deployment, the website must not contain:
+
+- Broken images
+- Broken links
+- Missing pages
+- JavaScript errors
+- Debug information
+- Placeholder content
+- Unfinished sections
+- Non-functional buttons
+- Broken mobile layouts
+
+The production website should be treated as a client-facing product.
+
+---
+
+# 21. Deployment
+
+The final website must be publicly accessible.
+
+The reviewer should be able to open the website without:
+
+- Installing dependencies
+- Running the project locally
+- Downloading files
+- Requesting development access
+- Logging into a development environment
+
+The final submission will consist of the deployed website URL.
+
+---
+
+# 22. Development Principles
+
+## Build for the actual requirement
+
+Features should be added because they support the SMASH business or assessment requirements.
+
+Avoid unnecessary complexity.
+
+## Reusability
+
+Common UI elements should be implemented as reusable components.
+
+## Maintainability
+
+Code should be organised so that future changes to:
+
+- Services
+- Prices
+- Barbers
+- Opening hours
+- Booking rules
+
+can be made without rewriting the entire application.
+
+## Accessibility
+
+The website should provide:
+
+- Sufficient colour contrast
+- Readable typography
+- Accessible form labels
+- Keyboard-friendly interactions
+- Clear focus states
+- Appropriate button/link semantics
+
+## Performance
+
+Images should be optimised and unnecessary resources should be avoided.
+
+---
+
+# 23. Future Enhancements
+
+The following features are outside the initial core scope but could potentially be introduced later:
+
+- Customer accounts
+- Booking history
+- Barber availability management
+- Admin dashboard
+- Online payments
+- Student verification
+- SMS/email reminders
+- Customer reviews
+- Loyalty programme
+- Promotional codes
+- Analytics
+
+These features should not be implemented at the expense of completing the core website requirements.
+
+---
+
+# 24. Definition of Done
+
+The SMASH website will be considered complete when:
+
+- [ ] The brand identity is complete.
+- [ ] The website has a professional visual design.
+- [ ] Home page is complete.
+- [ ] Services page is complete.
+- [ ] About page is complete.
+- [ ] Booking page is functional.
+- [ ] Contact information is available.
+- [ ] Terms & Conditions are accessible.
+- [ ] Navigation works.
+- [ ] Mobile navigation works.
+- [ ] Booking works.
+- [ ] Booking validation works.
+- [ ] Calendar integration works.
+- [ ] Generated calendar events contain the selected appointment information.
+- [ ] Popup/modal works.
+- [ ] Website works on mobile.
+- [ ] Website works on tablet.
+- [ ] Website works on desktop.
+- [ ] Images are high quality.
+- [ ] No obvious JavaScript errors exist.
+- [ ] No broken links or images exist.
+- [ ] Production deployment is publicly accessible.
+- [ ] The complete customer booking journey has been tested.
+
+---
+
+# 25. Final Product
+
+The final product is a publicly accessible website for:
+
+> **SMASH Barbershop**
+> **Observatory, Cape Town**
+
+with a clear focus on:
+
+> **Affordable, professional haircuts for students.**
+
+The final submission should provide the live website URL.
