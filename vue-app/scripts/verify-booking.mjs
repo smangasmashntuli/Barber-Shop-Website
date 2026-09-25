@@ -13,6 +13,7 @@ import assert from 'node:assert/strict'
 import { buildEventDetails, buildGoogleCalendarUrl, buildIcsContent, toUtcStamp } from '../src/utils/calendar.js'
 import { getAvailableTimeSlots, getTimeSlots, getOpenStatus } from '../src/utils/openingHours.js'
 import { shopLocalToUtcInstant, timeZoneOffsetMinutes } from '../src/utils/datetime.js'
+import { shop } from '../src/data/site.js'
 import {
   validateBookingDate,
   validateBookingTime,
@@ -174,7 +175,7 @@ check('The .ics file carries the shop address, barber, price and reference', () 
   assert.match(unfoldedIcs, /Barber: Thabo Mokoena/)
   assert.match(unfoldedIcs, /Price: R70/)
   assert.match(unfoldedIcs, /Booking reference: SM-TEST01/)
-  assert.match(unfoldedIcs, /ORGANIZER;CN=SMASH Barbershop:mailto:mazwenismash\.co\.za/)
+  assert.match(unfoldedIcs, new RegExp(`ORGANIZER;CN=${shop.name}:mailto:${shop.email.label}`))
 })
 
 check('The .ics file is a valid VCALENDAR document with CRLF line endings', () => {
