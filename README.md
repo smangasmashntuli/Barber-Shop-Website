@@ -454,6 +454,14 @@ Horizontal overflow should be avoided.
 
 ## Frontend
 
+## GitHub Pages Deployment
+
+The Vue app is deployed by `.github/workflows/deploy-pages.yml`. The workflow builds the repository root and publishes `dist` using GitHub Pages artifact deployment.
+
+In the repository on GitHub, open **Settings → Pages** and set **Source** to **GitHub Actions**. Do not select **Deploy from a branch** with the repository root, because that serves this README instead of the Vue build.
+
+After pushing to `main`, wait for the deployment workflow to finish. The project URL is `https://<your-github-username>.github.io/Barber-Shop-Website/`.
+
 ### React
 
 React will be used for building the application's component-based user interface.

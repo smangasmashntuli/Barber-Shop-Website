@@ -183,6 +183,7 @@ const quickLinks = [
   gap: 0.5rem;
   color: var(--cream-muted);
   text-decoration: none;
+  overflow-wrap: anywhere;
 }
 
 .site-footer__links a:hover {
@@ -215,8 +216,30 @@ const quickLinks = [
 }
 
 @media (max-width: 700px) {
+  .site-footer__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .site-footer__column {
+    min-width: 0;
+  }
+
+  .site-footer__hours li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+  }
+
   .site-footer__base {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 420px) {
+  .site-footer__hours li {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
   }
 }
 </style>
